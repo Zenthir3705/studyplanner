@@ -1,0 +1,37 @@
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" controllerName="hm.dhbw.cas.controller.List" height="100%">
+	<Page title="{i18n>action_course_list} ({courses>/chosen} {i18n>util_courses})" 
+		showNavButton="true"
+		navButtonPress="onBack" 
+		floatingFooter="true"
+		enableScrolling="true">
+		<headerContent>
+		</headerContent>
+		<content>
+			<List id="lsCourses" 
+				items="{ 
+					path : 'courses>/items', 
+					sorter: {
+						path: 'courses>type',
+						descending: false,
+						group: true
+					},
+					groupHeaderFactory: '.getGroupHeader' }" 
+				mode="{= ${view>/state} === 'Display' ? 'None' : 'MultiSelect' }">
+				<StandardListItem title="{courses>id}: {courses>title}" 
+							description="{courses>responsible}"
+							info="{= ${courses>chosen} ? '*' : '' }"
+							type="{= ${view>/state} === 'Display' ? 'Navigation' : 'Inactive' }"
+							press="onListItem"
+							visible="{= ${view>/state} === 'Display' || ( ${view>/state} === 'Edit' &amp;&amp; !${courses>chosen} ) }"/>
+			</List>
+		</content>
+		<footer>
+			<Toolbar>
+				<Button icon="sap-icon://multi-select" text="{i18n>action_choose_courses}" press="onChooseCourses" visible="{= ${view>/state} === 'Display' }"/>
+				<Button icon="sap-icon://accept" text="{i18n>action_add_courses}" press="onAddCourses" visible="{= ${view>/state} === 'Edit' }"/>
+				<ToolbarSpacer />
+				<Button icon="sap-icon://decline" text="{i18n>action_cancel}" press="onCancelChoosing" visible="{= ${view>/state} === 'Edit' }"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</core:View>

@@ -1,0 +1,60 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" 
+		xmlns:unified="sap.ui.unified" xmlns="sap.m" xmlns:uxap="sap.uxap" controllerName="hm.dhbw.cas.controller.Home">
+	<Page scrollable="true" title="{studies>/title}" floatingFooter="true">
+		<headerContent>
+			<Button icon="sap-icon://message-popup" text="{messages>/total}" press="onMessages" type="Emphasized" visible="{= ${messages>/total} > 0 }"/>	
+		</headerContent>
+		<content>
+			<IconTabBar expanded="true" expandable="false" headerBackgroundDesign="Transparent">
+				<items>
+					<!-- Core Courses -->
+					<IconTabFilter text="{i18n>studies_core_courses} ({studies>/core})">
+						<List items="{
+								path: 'studies>/courses',
+								sorter: {
+									path: 'studies>id',
+									descending: false
+								},
+								filters : [
+									{ path : 'type', operator : 'EQ', value1 : 'CORE' }
+								]
+							}">
+							<StandardListItem title="{studies>id}: {studies>title}" 
+											description="{studies>responsible}"
+											type="Navigation"
+											press="onCourse"/>
+						</List>
+					</IconTabFilter>
+					
+					<!-- Chosen Courses -->
+					<IconTabFilter text="{i18n>studies_chosen_courses} ({studies>/chosen/total})">
+						<List mode="Delete"
+							delete="onDeleteCourse"
+							items="{
+								path: 'studies>/courses',
+								sorter: {
+									path: 'studies>type',
+									descending: false,
+									group: true
+								},
+								groupHeaderFactory: '.getGroupHeader',
+								filters : [
+									{ path : 'type', operator : 'NE', value1 : 'CORE' }
+								]
+							}">
+							<StandardListItem title="{studies>id}: {studies>title}" 
+											description="{studies>responsible}"
+											type="Navigation"
+											press="onCourse"/>
+						</List>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</content>
+		<footer>
+			<Toolbar>
+				<Button icon="sap-icon://list" text="{i18n>action_course_list}" press="onCourseList" type="Transparent"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</core:View>
