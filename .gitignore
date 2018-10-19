@@ -3,3 +3,5 @@ settings.json
 node_modules/
 !WebContent/
 package-lock.json
+.eslintignore
+.eslintrc

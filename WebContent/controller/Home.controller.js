@@ -87,7 +87,7 @@ sap.ui.define([
 		 * Event method for the course list button.
 		 * @public
 		 */
-		onCourseList : function(oEvent) {
+		onCourseList : function() {
 			this.getRouter().navTo("list", { }, false);
 		}
 	});

@@ -231,9 +231,7 @@ sap.ui.define([ ], function() {
 		 * @private
 		 */
 		_getPageText : function(iPageNo, oDocument) {
-			var that = this;
-			
-			return new Promise(function(oResolve, oReject) {
+			return new Promise(function(oResolve) {
 				oDocument.getPage(iPageNo).then(function(oPage) {
 					oPage.getTextContent().then(function(oContent) {						
 						let aContent = [ ];

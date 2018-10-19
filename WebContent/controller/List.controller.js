@@ -23,7 +23,7 @@ sap.ui.define([
 		 * Event method for the choose courses button press event.
 		 * @public
 		 */
-		onChooseCourses : function(oEvent) {
+		onChooseCourses : function() {
 			this.getModel("view").setProperty("/state", "Edit");
 		},
 		
@@ -31,7 +31,7 @@ sap.ui.define([
 		 * Event method for the add courses button press event.
 		 * @public
 		 */
-		onAddCourses : function(oEvent) {
+		onAddCourses : function() {
 			var aContexts = this.byId("lsCourses").getSelectedContexts("courses"),
 			aIds = [ ];
 			
@@ -39,7 +39,7 @@ sap.ui.define([
 			for(let i=0 ; i<aContexts.length ; i++) {
 				aIds.push(aContexts[i].getObject().id);
 			}
-			CourseManager.addCourses(aIds)
+			CourseManager.addCourses(aIds);
 			
 			this.getModel("view").setProperty("/state", "Display");
 			this.getRouter().navTo("home", { }, false);
@@ -49,7 +49,7 @@ sap.ui.define([
 		 * Event method for the cancel choosing courses button press event.
 		 * @public
 		 */
-		onCancelChoosing : function(oEvent) {
+		onCancelChoosing : function() {
 			this.getModel("view").setProperty("/state", "Display");
 		},
 		

@@ -1,9 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
-	"sap/m/GroupHeaderListItem",
-	"hm/dhbw/cas/controller/CourseManager"
-], function(Controller, History, GroupHeaderListItem, CourseManager) {
+	"sap/ui/model/json/JSONModel",
+	"sap/m/GroupHeaderListItem"
+], function(Controller, History, JSONModel, GroupHeaderListItem) {
 	"use strict";
 	
 	return Controller.extend("hm.dhbw.cas.controller.BaseController", {
@@ -83,7 +83,7 @@ sap.ui.define([
 				this.getView().addDependent(this._oDialog);
 				this._oBusyDialog.setModel(new JSONModel({
 					title : this.getTextResource("dialog_loading_title"),
-					title : this.getTextResource("dialog_loading_description")
+					description : this.getTextResource("dialog_loading_description")
 				}));
 			}
 			

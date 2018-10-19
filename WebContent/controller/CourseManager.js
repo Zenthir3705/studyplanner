@@ -37,7 +37,7 @@ sap.ui.define([
 			oComponent.setModel(this._studies = new JSONModel({
 				title : "Mein Studium",
 				courses : aCourses.filter(function(oItem) {
-				    return oItem.type === "CORE";
+					return oItem.type === "CORE";
 				}),
 				core : 0,
 				chosen : {
@@ -107,7 +107,7 @@ sap.ui.define([
 
 			this._courses.setProperty("/items/" + iIndex + "/chosen", false);
 			oModel.setProperty("/courses", oModel.getProperty("/courses").filter(function(oItem) {
-			    return oItem.id !== sId;
+				return oItem.id !== sId;
 			}));
 			
 			this.validateStudies();
@@ -122,7 +122,7 @@ sap.ui.define([
 			var oModel = this._studies,
 			aMessages = [ ];
 			
-			oModel.setProperty("/core", 0);;
+			oModel.setProperty("/core", 0);
 			oModel.setProperty("/chosen/total", 0);
 			oModel.setProperty("/chosen/wi", 0);
 			oModel.setProperty("/chosen/inf", 0);

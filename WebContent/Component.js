@@ -45,7 +45,7 @@ sap.ui.define([
 				this._oDialog = sap.ui.xmlfragment("hm.dhbw.cas.view.fragments.BusyDialog", this);
 				this._oDialog.setModel(new JSONModel({
 					title : this.getModel("i18n").getProperty("dialog_loading_title"),
-					title : this.getModel("i18n").getProperty("dialog_loading_description")
+					description : this.getModel("i18n").getProperty("dialog_loading_description")
 				}));
 			}
 			
