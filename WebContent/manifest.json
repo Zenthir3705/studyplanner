@@ -1,0 +1,135 @@
+{
+	"_version" : "1.1.0",
+	"sap.app" : {
+		"_version" : "1.1.0",
+		"id" : "hm.dhbw.cas",
+		"type" : "application",
+		"i18n" : "i18n/i18n.properties",
+		"title" : "{{title_master}}",
+		"description" : "{{title_master}}",
+		"applicationVersion" : {
+			"version" : "1.0.0"
+		},
+		"ach" : "CA-UI5-DOC",
+		"dataSources" : {
+			
+		}
+	},
+	"sap.ui" : {
+		"_version" : "1.1.0",
+		"technology" : "UI5",
+		"icons": {
+            "favIcon": "favicon.ico"
+        },
+		"deviceTypes" : {
+			"desktop" : true,
+			"tablet" : true,
+			"phone" : true
+		},
+		"supportedThemes" : [
+			"sap_belize"
+		]
+	},
+	"sap.ui5" : {
+		"_version" : "1.1.0",
+		"rootView" : "hm.dhbw.cas.view.App",
+		"dependencies" : {
+			"minUI5Version" : "1.34.9",
+			"libs" : {
+				"sap.ui.core" : {
+					"minVersion" : "1.34.9"
+				},
+				"sap.m" : {
+					"minVersion" : "1.34.9"
+				},
+				"sap.ui.layout" : {
+					"minVersion" : "1.34.9",
+					"lazy" : true
+				},
+				"sap.ui.unified" : {
+					"minVersion" : "1.34.9",
+					"lazy" : true
+				},
+				"sap.uxap" : {
+					"minVersion" : "1.34.9",
+					"lazy" : true
+				}
+			}
+		},
+		"models" : {
+			"i18n" : {
+				"type" : "sap.ui.model.resource.ResourceModel",
+				"settings" : {
+					"bundleName" : "hm.dhbw.cas.i18n.i18n"
+				}
+			}
+		},
+		"resources" : {
+			"css" : [ {
+					"uri" : "css/style.css"
+				}
+			]
+		},
+		"contentDensities" : {
+			"compact" : true,
+			"cozy" : true
+		},
+		"routing" : {
+			"config" : {
+				"routerClass" : "sap.m.routing.Router",
+				"viewType" : "XML",
+				"viewPath" : "hm.dhbw.cas.view",
+				"controlId" : "apApp",
+				"controlAggregation" : "pages"
+			},
+			"routes" : [ {
+					"pattern" : "",
+					"name" : "home",
+					"target" : "home"
+				}, {
+					"pattern" : "home",
+					"name" : "home",
+					"target" : "home"
+				}, {
+					"pattern" : "list",
+					"name" : "list",
+					"target" : "list"
+				}, {
+					"pattern" : "course/{id}",
+					"name" : "course",
+					"target" : "course"
+				}, {
+					"pattern" : "disclaimer",
+					"name" : "disclaimer",
+					"target" : "disclaimer"
+				}, {
+					"pattern" : ":all:",
+					"name" : "bypassed",
+					"target" : "notFound"
+				}
+			],
+			"targets" : {
+				"home" : {
+					"viewName" : "Home",
+					"viewLevel" : 1
+				},
+				"list" : {
+					"viewName" : "List",
+					"viewLevel" : 2
+				},
+				"course" : {
+					"viewName" : "Course",
+					"viewLevel" : 3
+				},
+				"disclaimer" : {
+					"viewName" : "Disclaimer",
+					"viewLevel" : 2
+				},
+				"notFound" : {
+					"viewName" : "NotFound",
+					"viewLevel" : 2
+				}
+			}
+		}
+	}
+}
