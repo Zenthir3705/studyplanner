@@ -1,0 +1,12 @@
+{
+    "WI" : {
+        "id" : "WI",
+        "description" : "Wirtschaftsinformatik",
+        "mandatory" : {
+            "total" : 9,
+            "wi" : 2,
+            "inf" : 2,
+            "bwl" : 2
+        }
+    }
+}

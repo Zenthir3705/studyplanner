@@ -8,6 +8,7 @@ sap.ui.define([
 		_courses : undefined,
 		_studies : undefined,
 		_messages : undefined,
+		_config : undefined,
 		_i18n : undefined,
 		
 		/**
@@ -15,7 +16,7 @@ sap.ui.define([
 		 * @public
 		 * @param {Object} oCallback the callback object (success, error function)
 		 */
-		initialize : function(oComponent, aCourses) {
+		initialize : function(oComponent, sDiscipline, aCourses) {
 			let oData = {
 				core : 0,
 				chosen : 0,
@@ -32,6 +33,9 @@ sap.ui.define([
 			oData.chosen = aCourses.length - oData.core;
 				
 			oComponent.setModel(this._courses = new JSONModel(oData), "courses");
+
+			//Get the config
+			this._config = oComponent.getModel("config").getProperty("/" + sDiscipline);
 				
 			//Initialize the studies model
 			oComponent.setModel(this._studies = new JSONModel({
@@ -123,10 +127,12 @@ sap.ui.define([
 			aMessages = [ ];
 			
 			oModel.setProperty("/core", 0);
-			oModel.setProperty("/chosen/total", 0);
-			oModel.setProperty("/chosen/wi", 0);
-			oModel.setProperty("/chosen/inf", 0);
-			oModel.setProperty("/chosen/bwl", 0);
+			oModel.setProperty("/chosen", {
+				total : 0,
+				wi : 0,
+				inf : 0,
+				bwl : 0
+			});
 			
 			for(let i=0 ; i<oModel.getProperty("/courses").length ; i++) {
 				if(oModel.getProperty("/courses")[i].type === "CORE") {
@@ -143,51 +149,39 @@ sap.ui.define([
 				aMessages.push({
 					id : "CORE",
 					type : "Error",
-					title : this._i18n.getProperty("error_not_enough_courses_core", [ this._courses.getProperty("/core") ])
+					title : this._i18n.getProperty("error_not_enough_courses_core", [ this._courses.getProperty("/core").toString() ])
 				});
 			}
 			
 			//Check the chosen courses
-			if(oModel.getProperty("/chosen/total") < 9) {
-				aMessages.push({
-					id : "CHOSEN",
-					type : "Error",
-					title : this._i18n.getProperty("error_not_enough_courses")
-				});
+			for(let sKey in oModel.getProperty("/chosen")) {
+				if(sKey === "total") { //total chosen courses
+					if(oModel.getProperty("/chosen/total") < this._config.mandatory.total) {
+						aMessages.push({
+							id : "CHOSEN",
+							type : "Error",
+							title : this._i18n.getProperty("error_not_enough_courses", [ this._config.mandatory.total.toString() ])
+						});
+					}
+					else if(oModel.getProperty("/chosen/total") > this._config.mandatory.total) {
+						aMessages.push({
+							id : "CHOSEN",
+							type : "Warning",
+							title : this._i18n.getProperty("error_too_many_courses", [ this._config.mandatory.total.toString() ])
+						});
+					}
+				}
+				else { //course types
+					if(oModel.getProperty("/chosen/" + sKey) < this._config.mandatory[sKey]) {
+						aMessages.push({
+							id : sKey.toUpperCase(),
+							type : "Error",
+							title : this._i18n.getProperty("error_not_enough_courses_" + sKey, [ this._config.mandatory[sKey] ])
+						});
+					}
+				}
 			}
-			else if(oModel.getProperty("/chosen/total") > 9) {
-				aMessages.push({
-					id : "CHOSEN",
-					type : "Warning",
-					title : this._i18n.getProperty("error_too_many_courses")
-				});
-			}
-			
-			//Check the wi courses
-			if(oModel.getProperty("/chosen/wi") < 2) {
-				aMessages.push({
-					id : "WI",
-					type : "Error",
-					title : this._i18n.getProperty("error_not_enough_courses_wi")
-				});
-			}
-			//Check the inf courses
-			if(oModel.getProperty("/chosen/inf") < 2) {
-				aMessages.push({
-					id : "INF",
-					type : "Error",
-					title : this._i18n.getProperty("error_not_enough_courses_inf")
-				});
-			}
-			//Check the bwl courses
-			if(oModel.getProperty("/chosen/bwl") < 2) {
-				aMessages.push({
-					id : "BWL",
-					type : "Error",
-					title : this._i18n.getProperty("error_not_enough_courses_bwl")
-				});
-			}
-			
+
 			this._messages.setProperty("/total", aMessages.length);
 			this._messages.setProperty("/items", aMessages);
 			

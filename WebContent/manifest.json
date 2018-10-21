@@ -62,6 +62,10 @@
 				"settings" : {
 					"bundleName" : "hm.dhbw.cas.i18n.i18n"
 				}
+			},
+			"config" : {
+				"type" : "sap.ui.model.json.JSONModel",
+				"uri" : "data/config.json"
 			}
 		},
 		"resources" : {

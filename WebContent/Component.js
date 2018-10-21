@@ -23,7 +23,7 @@ sap.ui.define([
 			this._showBusyDialog();
 			PDFReader.loadResources(this, {
 				success : function(aCourses) {
-					CourseManager.initialize(this, aCourses);
+					CourseManager.initialize(this, "WI", aCourses);
 
 					this.getRouter().initialize();
 					this._hideBusyDialog();
