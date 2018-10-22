@@ -14,7 +14,11 @@ sap.ui.define([
 		/**
 		 * Loads a pdf and creates the appropriate model.
 		 * @public
-		 * @param {Object} oCallback the callback object (success, error function)
+		 * @param {sap.ui.core.UIComponent} oComponent 			the app component
+		 * @param {string}					sDiscipline 		the study decipline to validate
+		 * @param {Object[]}				aCourses			the array of courses available
+		 * @param {string}					aCourses.type 		the type of the course
+		 * @param {boolean}					aCourses.chosen 	wether the course is chosen; true if it is
 		 */
 		initialize : function(oComponent, sDiscipline, aCourses) {
 			let oData = {
@@ -57,7 +61,7 @@ sap.ui.define([
 				items : [ ]
 			}), "messages");
 			
-			this._i18n = oComponent.getModel("i18n");
+			this._i18n = oComponent.getModel("i18n").getResourceBundle();
 		},
 		
 		/**
@@ -149,7 +153,7 @@ sap.ui.define([
 				aMessages.push({
 					id : "CORE",
 					type : "Error",
-					title : this._i18n.getProperty("error_not_enough_courses_core", [ this._courses.getProperty("/core").toString() ])
+					title : this._i18n.getText("error_not_enough_courses_core", [ this._courses.getProperty("/core").toString() ])
 				});
 			}
 			
@@ -160,14 +164,14 @@ sap.ui.define([
 						aMessages.push({
 							id : "CHOSEN",
 							type : "Error",
-							title : this._i18n.getProperty("error_not_enough_courses", [ this._config.mandatory.total.toString() ])
+							title : this._i18n.getText("error_not_enough_courses", [ this._config.mandatory.total.toString() ])
 						});
 					}
 					else if(oModel.getProperty("/chosen/total") > this._config.mandatory.total) {
 						aMessages.push({
 							id : "CHOSEN",
 							type : "Warning",
-							title : this._i18n.getProperty("error_too_many_courses", [ this._config.mandatory.total.toString() ])
+							title : this._i18n.getText("error_too_many_courses", [ this._config.mandatory.total.toString() ])
 						});
 					}
 				}
@@ -176,7 +180,7 @@ sap.ui.define([
 						aMessages.push({
 							id : sKey.toUpperCase(),
 							type : "Error",
-							title : this._i18n.getProperty("error_not_enough_courses_" + sKey, [ this._config.mandatory[sKey] ])
+							title : this._i18n.getText("error_not_enough_courses_" + sKey, [ this._config.mandatory[sKey] ])
 						});
 					}
 				}
