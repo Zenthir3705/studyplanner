@@ -134,7 +134,7 @@ sap.ui.define([ ], function() {
 							}
 							
 							//Load the course types
-							that._loadPDF("data/Terminplanung 2018 19.pdf", {
+							that._loadPDF("data/M_W_Terminplanung_2019_20.pdf", {
 								success : function(aPages) {
 									//Loop over all pages and create the courses
 									for(let i=0, aContent, oCourse ; i<aPages.length ; i++) {
