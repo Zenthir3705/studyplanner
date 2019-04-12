@@ -140,7 +140,7 @@ sap.ui.define([ ], function() {
 									for(let i=0, aContent, oCourse ; i<aPages.length ; i++) {
 										aContent = aPages[i].content;
 										
-										for(let j=10, oContent ; j<aContent.length ; j++) {
+										for(let j=5, oContent ; j<aContent.length ; j++) {
 											oContent = aContent[j];
 											
 											//Check if a new course starts
@@ -148,8 +148,14 @@ sap.ui.define([ ], function() {
 												|| oContent.substring(0, 3) === "W2M" 
 												|| oContent.substring(0, 3) === "WM2" 
 												|| oContent.substring(0, 2) === "TM") {
-												oCourse = aCourses.find(x => x.id === oContent);
-												j += 1;
+												//Get the course id
+												let sId = oContent.split(" ")[0];
+												oCourse = aCourses.find(x => x.id === sId);
+
+												//Check if the description also is in the content
+												if(oCourse && oContent.length < 10) {
+													j += 1;
+												}
 												continue;
 											}
 											else if(oCourse) {

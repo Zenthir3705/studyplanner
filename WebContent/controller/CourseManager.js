@@ -16,12 +16,10 @@ sap.ui.define([
 		 * @public
 		 * @param {sap.ui.core.UIComponent} oComponent 			the app component
 		 * @param {string}					sDiscipline 		the study decipline to validate
-		 * @param {Object[]}				aCourses			the array of courses available
-		 * @param {string}					aCourses.type 		the type of the course
-		 * @param {boolean}					aCourses.chosen 	wether the course is chosen; true if it is
 		 */
-		initialize : function(oComponent, sDiscipline, aCourses) {
-			let oData = {
+		initialize : function(oComponent, sDiscipline) {
+			let aCourses = oComponent.getModel("courses_" + sDiscipline.toLowerCase()).getData(),
+			oData = {
 				core : 0,
 				chosen : 0,
 				wi : 0,
@@ -30,6 +28,8 @@ sap.ui.define([
 				"?" : 0,
 				items : aCourses
 			};
+			
+			this._i18n = oComponent.getModel("i18n").getResourceBundle();
 				
 			for(let i=0 ; i<aCourses.length ; i++) {
 				oData[aCourses[i].type.toLowerCase()] += 1;
@@ -43,7 +43,7 @@ sap.ui.define([
 				
 			//Initialize the studies model
 			oComponent.setModel(this._studies = new JSONModel({
-				title : "Mein Studium",
+				title : this._i18n.getText("title_my_studies"),
 				courses : aCourses.filter(function(oItem) {
 					return oItem.type === "CORE";
 				}),
@@ -60,8 +60,6 @@ sap.ui.define([
 				total : 0,
 				items : [ ]
 			}), "messages");
-			
-			this._i18n = oComponent.getModel("i18n").getResourceBundle();
 		},
 		
 		/**

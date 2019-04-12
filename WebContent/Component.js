@@ -20,7 +20,17 @@ sap.ui.define([
 		init : function() {
 			UIComponent.prototype.init.apply(this, arguments);
 			
-			this._showBusyDialog();
+			//Initialize the courses
+			this.getModel("config").attachEventOnce("requestCompleted", function() {
+				this.getModel("courses_wi").attachEventOnce("requestCompleted", function() {
+					CourseManager.initialize(this, "WI");
+					this.getRouter().initialize();
+				}, this);
+			}, this);
+
+			//Commented out (model is in a .json file now)
+			/*this._showBusyDialog();
+			
 			PDFReader.loadResources(this, {
 				success : function(aCourses) {
 					CourseManager.initialize(this, "WI", aCourses);
@@ -31,7 +41,7 @@ sap.ui.define([
 				error : function() {
 					this.getRouter().initialize();
 				}.bind(this)
-			});
+			});*/
 		},
 		
 		/**

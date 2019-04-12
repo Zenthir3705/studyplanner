@@ -44,15 +44,7 @@
 				},
 				"sap.ui.layout" : {
 					"minVersion" : "1.34.9",
-					"lazy" : true
-				},
-				"sap.ui.unified" : {
-					"minVersion" : "1.34.9",
-					"lazy" : true
-				},
-				"sap.uxap" : {
-					"minVersion" : "1.34.9",
-					"lazy" : true
+					"lazy" : false
 				}
 			}
 		},
@@ -66,6 +58,10 @@
 			"config" : {
 				"type" : "sap.ui.model.json.JSONModel",
 				"uri" : "data/config.json"
+			},
+			"courses_wi" : {
+				"type" : "sap.ui.model.json.JSONModel",
+				"uri" : "data/WI.json"
 			}
 		},
 		"resources" : {
