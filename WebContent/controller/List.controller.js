@@ -1,8 +1,13 @@
 sap.ui.define([
 	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
+	"sap/m/IconTabFilter",
+	"sap/m/List",
+	"sap/m/StandardListItem",
 	"hm/dhbw/cas/controller/BaseController",
 	"hm/dhbw/cas/controller/CourseManager"
-], function(JSONModel, BaseController, CourseManager) {
+], function(JSONModel, Filter, FilterOperator, IconTabFilter, List, StandardListItem, BaseController, CourseManager) {
 	"use strict";
 	
 	return BaseController.extend("hm.dhbw.cas.controller.Home", {
@@ -14,9 +19,46 @@ sap.ui.define([
 		 */
 		onInit : function() {
 			BaseController.prototype.onInit.call(this);
-			this.setModel(new JSONModel({
-				state : "Display"
-			}), "view");
+			
+			//Generate the tab filters
+			this._generateTabFilters();
+		},
+
+		/**
+		 * Generates the tab filters according to the chosen studies type
+		 * @private
+		 */
+		_generateTabFilters : function() {
+			const that = this,
+			oTabBar = this.byId("lsTabBar"),
+			sDiscipline = this.getModel("studies").getProperty("/discipline"),
+			aTypes = this.getModel("config").getProperty("/" + sDiscipline + "/types");
+
+			for(let i=0 ; i<aTypes.length ; i++) {
+				oTabBar.addItem(new IconTabFilter({
+					text : "{i18n>course_type_" + aTypes[i].toLowerCase() + "_long} ({courses>/" + aTypes[i].toLowerCase() + "})",
+					content : [
+						new List({
+							mode : "None"
+						}).bindItems({
+							path : "courses>/items",
+							sorter : {
+								path : "courses>id",
+								descending : false
+							},
+							filters : [
+								new Filter("type",FilterOperator.EQ, aTypes[i])
+							],
+							template : new StandardListItem({
+								title : "{courses>id}: {courses>title}",
+								description : "{courses>responsible}",
+								type : "Navigation",
+								press : that.onListItem.bind(that)
+							})
+						})
+					]
+				}));
+			}
 		},
 		
 		/**

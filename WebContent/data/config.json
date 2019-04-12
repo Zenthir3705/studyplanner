@@ -2,6 +2,13 @@
     "WI" : {
         "id" : "WI",
         "description" : "Wirtschaftsinformatik",
+        "types" : [
+            "CORE",
+            "BWL",
+            "INF",
+            "WI",
+            "?"
+        ],
         "mandatory" : {
             "total" : 9,
             "wi" : 2,

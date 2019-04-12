@@ -47,6 +47,7 @@ sap.ui.define([
 				courses : aCourses.filter(function(oItem) {
 					return oItem.type === "CORE";
 				}),
+				discipline : sDiscipline,
 				core : 0,
 				chosen : {
 					total : 0,
@@ -103,7 +104,7 @@ sap.ui.define([
 		},
 		
 		/**
-		 * Removes a course to the studies model
+		 * Removes a course from the studies model
 		 * @public
 		 * @param {String} sId the course id
 		 */
